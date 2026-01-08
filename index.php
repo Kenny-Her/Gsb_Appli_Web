@@ -3,7 +3,7 @@ require 'bd_connexion.php';
 
 if (isset($_GET['logout'])) {
     session_destroy();
-    header('Location: index.php');
+    header(header: 'Location: index.php');
     exit;
 }
 
@@ -11,13 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $mdp = $_POST['mdp'];
 
-    $requete = $pdo->prepare("SELECT * FROM utilisateurs WHERE email = ?");
-    $requete->execute([$email]);
+    $requete = $pdo->prepare(query: "SELECT * FROM utilisateurs WHERE email = ?");
+    $requete->execute(params: [$email]);
     $user = $requete->fetch();
 
-    if ($user && password_verify($mdp, $user['mdp'])) {
+    if ($user && password_verify(password: $mdp, hash: $user['mdp'])) {
         $_SESSION['user'] = $user;
-        header('Location: tableau-de-bord.php');
+        header(header: 'Location: tableau-de-bord.php');
         exit;
     } else {
         $error = "Identifiants incorrects";
@@ -43,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="password" name="mdp" placeholder="Mot de passe" required>
             <button type="submit" class="btn">Se connecter</button>
         </form>
-        <p style="text-align: center; margin-top: 1rem;"><a href="inscription.php">Pas de compte ? S'inscrire</a></p>
     </div>
 </body>
 </html>

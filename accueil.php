@@ -1,6 +1,6 @@
 <?php
 if (!isset($_SESSION['user']) && basename($_SERVER['PHP_SELF']) != 'index.php') {
-    header('Location: index.php');
+    header(header: 'Location: index.php');
     exit;
 }
 
@@ -22,7 +22,7 @@ $role = $_SESSION['user']['role'] ?? 'Visiteur';
     </div>
     
     <div class="user-info">
-        <?= htmlspecialchars($_SESSION['user']['prenom']) ?><br>
+        <?= htmlspecialchars(string: $_SESSION['user']['prenom']) ?><br>
         <span style="background: rgba(255,255,255,0.2); padding: 2px 5px; border-radius: 3px; display: inline-block; margin-top: 5px;">
             <?= $role ?>
         </span>
@@ -44,9 +44,13 @@ $role = $_SESSION['user']['role'] ?? 'Visiteur';
         <?php if ($role == 'Responsable'): ?>
             <li><a href="gestion-praticiens.php">Gestion Praticiens</a></li>
             <li><a href="gestion-produits.php">Gestion Produits</a></li>
+            <li><a href="inscription.php">Créer un compte</a></li>
         <?php endif; ?>
 
         <?php if ($role == 'Admin'): ?>
+            <li><a href="gestion-praticiens.php">Gestion Praticiens</a></li>
+            <li><a href="gestion-produits.php">Gestion Produits</a></li>
+            <li><a href="inscription.php">Créer un compte</a></li>
         <?php endif; ?>
 
         <li><a href="profil-utilisateur.php">Profil Utilisateur</a></li>

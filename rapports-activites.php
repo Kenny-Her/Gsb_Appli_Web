@@ -5,13 +5,24 @@ require 'accueil.php';
 $id_utilisateur = $_SESSION['user']['id'];
 $success_msg = '';
 
+if (isset($_POST['supprimer_rapport'])) {
+    $pdo->prepare(query: "DELETE FROM rapports WHERE id = ? AND id_utilisateur = ?")->execute(params: [$_POST['id_rapport'], $id_utilisateur]);
+    $success_msg = "Rapport supprimé.";
+}
+
+if (isset($_POST['modifier_rapport'])) {
+    $pdo->prepare(query: "UPDATE rapports SET bilan = ? WHERE id = ? AND id_utilisateur = ?")
+        ->execute(params: [$_POST['bilan_edit'], $_POST['id_rapport'], $id_utilisateur]);
+    $success_msg = "Rapport mis à jour.";
+}
+
 if (isset($_POST['ajout_rapport'])) {
     try {
         $pdo->beginTransaction();
 
         $sqlRapport = "INSERT INTO rapports (id_utilisateur, id_praticien, date_visite, lieu_visite, bilan) VALUES (?, ?, ?, ?, ?)";
-        $stmtRapport = $pdo->prepare($sqlRapport);
-        $stmtRapport->execute([
+        $stmtRapport = $pdo->prepare(query: $sqlRapport);
+        $stmtRapport->execute(params: [
             $id_utilisateur,
             $_POST['id_praticien'],
             $_POST['date_visite'],
@@ -22,9 +33,9 @@ if (isset($_POST['ajout_rapport'])) {
 
         if (!empty($_POST['produits'])) {
             $sqlProduits = "INSERT INTO rapport_produits (id_rapport, id_produit) VALUES (?, ?)";
-            $stmtProduits = $pdo->prepare($sqlProduits);
+            $stmtProduits = $pdo->prepare(query: $sqlProduits);
             foreach ($_POST['produits'] as $id_produit) {
-                $stmtProduits->execute([$id_rapport, $id_produit]);
+                $stmtProduits->execute(params: [$id_rapport, $id_produit]);
             }
         }
 
@@ -36,12 +47,12 @@ if (isset($_POST['ajout_rapport'])) {
     }
 }
 
-$stmtRapports = $pdo->prepare("SELECT r.*, p.nom as praticien_nom, p.prenom as praticien_prenom FROM rapports r JOIN praticiens p ON r.id_praticien = p.id WHERE r.id_utilisateur = ? ORDER BY r.date_creation DESC");
-$stmtRapports->execute([$id_utilisateur]);
+$stmtRapports = $pdo->prepare(query: "SELECT r.*, p.nom as praticien_nom, p.prenom as praticien_prenom FROM rapports r JOIN praticiens p ON r.id_praticien = p.id WHERE r.id_utilisateur = ? ORDER BY r.date_creation DESC");
+$stmtRapports->execute(params: [$id_utilisateur]);
 $rapports = $stmtRapports->fetchAll();
 
-$praticiens = $pdo->query("SELECT * FROM praticiens ORDER BY nom, prenom")->fetchAll();
-$produits = $pdo->query("SELECT * FROM produits ORDER BY nom")->fetchAll();
+$praticiens = $pdo->query(query: "SELECT * FROM praticiens ORDER BY nom, prenom")->fetchAll();
+$produits = $pdo->query(query: "SELECT * FROM produits ORDER BY nom")->fetchAll();
 ?>
 
 <h2>Mes Rapports d'activités</h2>
@@ -56,7 +67,7 @@ $produits = $pdo->query("SELECT * FROM produits ORDER BY nom")->fetchAll();
         <select name="id_praticien" required>
             <option value="">-- Choisir un praticien --</option>
             <?php foreach ($praticiens as $p): ?>
-                <option value="<?= $p['id'] ?>"><?= htmlspecialchars($p['nom'] . ' ' . $p['prenom']) ?></option>
+                <option value="<?= $p['id'] ?>"><?= htmlspecialchars(string: $p['nom'] . ' ' . $p['prenom']) ?></option>
             <?php endforeach; ?>
         </select>
         
@@ -68,7 +79,7 @@ $produits = $pdo->query("SELECT * FROM produits ORDER BY nom")->fetchAll();
         <label>Produit(s) présenté(s) (maintenir CTRL pour sélectionner plusieurs)</label>
         <select name="produits[]" multiple size="5">
             <?php foreach ($produits as $p): ?>
-                <option value="<?= $p['id'] ?>"><?= htmlspecialchars($p['nom']) ?></option>
+                <option value="<?= $p['id'] ?>"><?= htmlspecialchars(string: $p['nom']) ?></option>
             <?php endforeach; ?>
         </select>
 
@@ -88,15 +99,28 @@ $produits = $pdo->query("SELECT * FROM produits ORDER BY nom")->fetchAll();
                 <th>Praticien</th>
                 <th>Date visite</th>
                 <th>Bilan</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($rapports as $r): ?>
             <tr>
-                <td><?= date("d/m/Y", strtotime($r['date_creation'])) ?></td>
-                <td><?= htmlspecialchars($r['praticien_nom'] . ' ' . $r['praticien_prenom']) ?></td>
-                <td><?= date("d/m/Y", strtotime($r['date_visite'])) ?></td>
-                <td><?= htmlspecialchars(substr($r['bilan'], 0, 50)) ?>...</td>
+                <td><?= date(format: "d/m/Y", timestamp: strtotime(datetime: $r['date_creation'])) ?></td>
+                <td><?= htmlspecialchars(string: $r['praticien_nom'] . ' ' . $r['praticien_prenom']) ?></td>
+                <td><?= date(format: "d/m/Y", timestamp: strtotime(datetime: $r['date_visite'])) ?></td>
+                <td>
+                    <form method="POST" style="display:flex; gap:5px;">
+                        <input type="hidden" name="id_rapport" value="<?= $r['id'] ?>">
+                        <input type="text" name="bilan_edit" value="<?= htmlspecialchars(string: $r['bilan']) ?>" style="width:100%">
+                        <button type="submit" name="modifier_rapport" class="btn" style="padding:2px 5px;">OK</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="POST" onsubmit="return confirm('Supprimer ce rapport ?');">
+                        <input type="hidden" name="id_rapport" value="<?= $r['id'] ?>">
+                        <button type="submit" name="supprimer_rapport" class="btn" style="background:#e74c3c; padding:5px;">X</button>
+                    </form>
+                </td>
             </tr>
             <?php endforeach; ?>
         </tbody>
