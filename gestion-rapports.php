@@ -34,7 +34,7 @@ if (isset($_GET['id_details'])) {
 
     $stmtProd = $pdo->prepare(query: "SELECT p.nom FROM produits p JOIN rapport_produits rp ON p.id = rp.id_produit WHERE rp.id_rapport = ?");
     $stmtProd->execute(params: [$_GET['id_details']]);
-    $produits_rapport = $stmtProd->fetchAll(PDO::FETCH_COLUMN);
+    $produits_rapport = $stmtProd->fetchAll(mode: PDO::FETCH_COLUMN);
 }
 ?>
 

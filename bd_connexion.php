@@ -1,9 +1,15 @@
 <?php
+$host = 'kennyha214.mysql.db';
+$port = '3306';
+$db = 'kennyha214';
+$user = 'kennyha214';
+$pass = 'dRzUtxB7iqHu4aT';
+
 try {
-    $pdo = new PDO(dsn: 'mysql:host=localhost;dbname=bd_appli_web;charset=utf8', username: 'root', password: '');
-    $pdo->setAttribute(attribute: PDO::ATTR_ERRMODE, value: PDO::ERRMODE_EXCEPTION);
-} catch (Exception $e) {
-    die('Erreur BDD : ' . $e->getMessage());
+    $pdo = new PDO("mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
 }
 session_start();
 

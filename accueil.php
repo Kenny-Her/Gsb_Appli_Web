@@ -44,12 +44,14 @@ $role = $_SESSION['user']['role'] ?? 'Visiteur';
         <?php if ($role == 'Responsable'): ?>
             <li><a href="gestion-praticiens.php">Gestion Praticiens</a></li>
             <li><a href="gestion-produits.php">Gestion Produits</a></li>
+            <li><a href="gestion-regions.php">Gestion Régions</a></li>
             <li><a href="inscription.php">Créer un compte</a></li>
         <?php endif; ?>
 
         <?php if ($role == 'Admin'): ?>
             <li><a href="gestion-praticiens.php">Gestion Praticiens</a></li>
             <li><a href="gestion-produits.php">Gestion Produits</a></li>
+            <li><a href="gestion-regions.php">Gestion Régions</a></li>
             <li><a href="inscription.php">Créer un compte</a></li>
         <?php endif; ?>
 

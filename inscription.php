@@ -10,13 +10,16 @@ if ($role != 'Admin' && $role != 'Responsable') {
 $error = '';
 $success = '';
 
+$regions = $pdo->query(query: "SELECT * FROM regions ORDER BY nom")->fetchAll();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nom = $_POST['nom'] ?? '';
-    $prenom = $_POST['prenom'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $mdp = $_POST['mdp'] ?? '';
+    $nom         = $_POST['nom']         ?? '';
+    $prenom      = $_POST['prenom']      ?? '';
+    $email       = $_POST['email']       ?? '';
+    $mdp         = $_POST['mdp']         ?? '';
     $mdp_confirm = $_POST['mdp_confirm'] ?? '';
-    $role_compte = $_POST['role'] ?? 'Visiteur';
+    $role_compte = $_POST['role']        ?? 'Visiteur';
+    $id_region   = !empty($_POST['id_region']) ? (int)$_POST['id_region'] : null;
 
     if (empty($nom) || empty($prenom) || empty($email) || empty($mdp)) {
         $error = "Tous les champs sont obligatoires.";
@@ -31,9 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = "Cette adresse email est déjà utilisée.";
         } else {
             $hashed_mdp = password_hash(password: $mdp, algo: PASSWORD_BCRYPT);
-
-            $requete = $pdo->prepare(query: "INSERT INTO utilisateurs (nom, prenom, email, mdp, role) VALUES (?, ?, ?, ?, ?)");
-            if ($requete->execute(params: [$nom, $prenom, $email, $hashed_mdp, $role_compte])) {
+            $requete = $pdo->prepare(query: "INSERT INTO utilisateurs (nom, prenom, email, mdp, role, id_region) VALUES (?, ?, ?, ?, ?, ?)");
+            if ($requete->execute(params: [$nom, $prenom, $email, $hashed_mdp, $role_compte, $id_region])) {
                 $success = "Compte créé avec succès !";
             } else {
                 $error = "Une erreur est survenue lors de la création.";
@@ -49,13 +51,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php if(!empty($error)) echo "<p style='color:red'>$error</p>"; ?>
     <?php if(!empty($success)) echo "<p style='color:green'>$success</p>"; ?>
     <form method="POST">
-        <label>Rôle</label>
-        <select name="role" required>
-            <option value="Visiteur">Visiteur</option>
-            <option value="Delegue">Délégué</option>
-            <option value="Responsable">Responsable</option>
-            <option value="Admin">Admin</option>
-        </select>
+        <div style="display:flex; gap:10px;">
+            <div style="flex:1">
+                <label>Rôle</label>
+                <select name="role" required>
+                    <option value="Visiteur">Visiteur</option>
+                    <option value="Delegue">Délégué</option>
+                    <option value="Responsable">Responsable</option>
+                    <option value="Admin">Admin</option>
+                </select>
+            </div>
+            <div style="flex:1">
+                <label>Région</label>
+                <select name="id_region">
+                    <option value="">-- Aucune région --</option>
+                    <?php foreach ($regions as $r): ?>
+                        <option value="<?= $r['id'] ?>"><?= htmlspecialchars(string: $r['nom']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
 
         <div style="display:flex; gap:10px;">
             <div style="flex:1"><label>Nom</label><input type="text" name="nom" required></div>
