@@ -9,6 +9,8 @@ if ($role != 'Delegue') {
 
 $id_delegue = $_SESSION['user']['id'];
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') csrf_verify();
+
 if (isset($_POST['valider_rapport'])) {
     $req = $pdo->prepare(query: "UPDATE rapports SET statut = 'Validé' WHERE id = ?");
     $req->execute(params: [$_POST['id_rapport']]);
@@ -53,6 +55,7 @@ if (isset($_GET['id_details'])) {
     
     <?php if (($details['statut'] ?? 'Soumis') != 'Validé'): ?>
     <form method="POST">
+        <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
         <input type="hidden" name="id_rapport" value="<?= $details['id'] ?>">
         <button type="submit" name="valider_rapport" class="btn" style="background:#27ae60;">Valider ce rapport</button>
     </form>

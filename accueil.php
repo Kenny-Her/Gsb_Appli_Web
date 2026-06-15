@@ -10,7 +10,7 @@ $role = $_SESSION['user']['role'] ?? 'Visiteur';
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>GSB App - <?= $role ?></title>
+    <title>GSB App - <?= htmlspecialchars($role) ?></title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -24,7 +24,7 @@ $role = $_SESSION['user']['role'] ?? 'Visiteur';
     <div class="user-info">
         <?= htmlspecialchars(string: $_SESSION['user']['prenom']) ?><br>
         <span style="background: rgba(255,255,255,0.2); padding: 2px 5px; border-radius: 3px; display: inline-block; margin-top: 5px;">
-            <?= $role ?>
+            <?= htmlspecialchars($role) ?>
         </span>
     </div>
 

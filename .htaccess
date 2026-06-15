@@ -1,0 +1,5 @@
+# Interdit l'accès direct aux fichiers sensibles
+<Files ".env">
+    Order allow,deny
+    Deny from all
+</Files>

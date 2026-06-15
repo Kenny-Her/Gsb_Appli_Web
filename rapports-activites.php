@@ -5,6 +5,8 @@ require 'accueil.php';
 $id_utilisateur = $_SESSION['user']['id'];
 $success_msg = '';
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') csrf_verify();
+
 if (isset($_POST['supprimer_rapport'])) {
     $pdo->prepare(query: "DELETE FROM rapports WHERE id = ? AND id_utilisateur = ?")->execute(params: [$_POST['id_rapport'], $id_utilisateur]);
     $success_msg = "Rapport supprimé.";
@@ -83,7 +85,7 @@ if (isset($_POST['ajout_rapport'])) {
         exit();
     } catch (Exception $e) {
         $pdo->rollBack();
-        die("Erreur lors de la soumission du rapport : " . $e->getMessage());
+        die("Une erreur est survenue lors de la soumission du rapport. Veuillez réessayer.");
     }
 }
 
@@ -108,7 +110,7 @@ $produits = $pdo->query(query: "SELECT * FROM produits ORDER BY nom")->fetchAll(
 <h2>Mes Rapports d'activités</h2>
 
 <?php if ($success_msg): ?>
-    <p style="color:green; padding: 0.5rem 1rem; background:#eaffea; border-left:4px solid green; margin-bottom:1rem;"><?= $success_msg ?></p>
+    <p style="color:green; padding: 0.5rem 1rem; background:#eaffea; border-left:4px solid green; margin-bottom:1rem;"><?= htmlspecialchars($success_msg) ?></p>
 <?php endif; ?>
 
 <?php if ($rapport_edit): ?>
@@ -116,6 +118,7 @@ $produits = $pdo->query(query: "SELECT * FROM produits ORDER BY nom")->fetchAll(
 <div class="card" style="border-left: 5px solid #f39c12;">
     <h3>✏️ Modifier le rapport #<?= $rapport_edit['id'] ?></h3>
     <form method="POST" action="rapports-activites.php">
+        <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
         <input type="hidden" name="id_rapport" value="<?= $rapport_edit['id'] ?>">
         <label>Praticien visité</label>
         <select name="id_praticien" required>
@@ -151,6 +154,7 @@ $produits = $pdo->query(query: "SELECT * FROM produits ORDER BY nom")->fetchAll(
 <div class="card">
     <h3>Rédiger un rapport</h3>
     <form method="POST" action="rapports-activites.php">
+        <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
         <label>Praticien visité</label>
         <select name="id_praticien" required>
             <option value="">-- Choisir un praticien --</option>
@@ -215,6 +219,7 @@ $produits = $pdo->query(query: "SELECT * FROM produits ORDER BY nom")->fetchAll(
                                 var f=document.createElement('form');
                                 f.method='POST';
                                 f.action='rapports-activites.php';
+                                var c=document.createElement('input'); c.type='hidden'; c.name='csrf_token'; c.value='<?= csrf_token() ?>'; f.appendChild(c);
                                 var i=document.createElement('input'); i.type='hidden'; i.name='id_rapport'; i.value='<?= $r['id'] ?>'; f.appendChild(i);
                                 var b=document.createElement('input'); b.type='hidden'; b.name='supprimer_rapport'; b.value='1'; f.appendChild(b);
                                 document.body.appendChild(f); f.submit();

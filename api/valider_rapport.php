@@ -17,7 +17,6 @@ if (!$id_rapport) {
     json_response(["status" => 400, "message" => "ID rapport requis"], 400);
 }
 
-// Vérifier que le rapport appartient à un visiteur de son équipe
 $stmt = $pdo->prepare("
     SELECT r.* FROM rapports r
     JOIN utilisateurs u ON r.id_utilisateur = u.id

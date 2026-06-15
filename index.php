@@ -8,6 +8,7 @@ if (isset($_GET['logout'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    csrf_verify();
     $email = $_POST['email'];
     $mdp = $_POST['mdp'];
 
@@ -37,8 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if(isset($_GET['error']) && $_GET['error'] == 'inactivity'): ?>
             <p style='color:orange'>Vous avez été déconnecté pour inactivité.</p>
         <?php endif; ?>
-        <?php if(isset($error)) echo "<p style='color:red'>$error</p>"; ?>
+        <?php if(isset($error)) echo "<p style='color:red'>" . htmlspecialchars($error) . "</p>"; ?>
         <form method="POST">
+            <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
             <input type="email" name="email" placeholder="Email">
             <input type="password" name="mdp" placeholder="Mot de passe" required>
             <button type="submit" class="btn">Se connecter</button>

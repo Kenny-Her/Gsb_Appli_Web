@@ -1,0 +1,317 @@
+<mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+
+    <!-- ═══════════════════════════════════════════
+         ENTITÉS
+    ═══════════════════════════════════════════ -->
+
+    <!-- REGION -->
+    <mxCell id="e_region" value="REGION" style="swimlane;fontStyle=1;align=center;startSize=25;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="80" y="80" width="150" height="65" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_reg_id" value="#id" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontStyle=4;" vertex="1" parent="e_region">
+      <mxGeometry y="25" width="150" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_reg_nom" value="nom" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_region">
+      <mxGeometry y="45" width="150" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- UTILISATEUR -->
+    <mxCell id="e_util" value="UTILISATEUR" style="swimlane;fontStyle=1;align=center;startSize=25;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="80" y="270" width="180" height="165" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_util_id" value="#id" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontStyle=4;" vertex="1" parent="e_util">
+      <mxGeometry y="25" width="180" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_util_nom" value="nom" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_util">
+      <mxGeometry y="45" width="180" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_util_prenom" value="prenom" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_util">
+      <mxGeometry y="65" width="180" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_util_email" value="email" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_util">
+      <mxGeometry y="85" width="180" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_util_mdp" value="mdp" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_util">
+      <mxGeometry y="105" width="180" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_util_role" value="role" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_util">
+      <mxGeometry y="125" width="180" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_util_token" value="token" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_util">
+      <mxGeometry y="145" width="180" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- RAPPORT -->
+    <mxCell id="e_rapport" value="RAPPORT" style="swimlane;fontStyle=1;align=center;startSize=25;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="500" y="230" width="180" height="125" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_rapp_id" value="#id" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontStyle=4;" vertex="1" parent="e_rapport">
+      <mxGeometry y="25" width="180" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_rapp_date" value="date_visite" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_rapport">
+      <mxGeometry y="45" width="180" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_rapp_lieu" value="lieu_visite" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_rapport">
+      <mxGeometry y="65" width="180" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_rapp_bilan" value="bilan" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_rapport">
+      <mxGeometry y="85" width="180" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_rapp_valide" value="valide" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_rapport">
+      <mxGeometry y="105" width="180" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- VISITE -->
+    <mxCell id="e_visite" value="VISITE" style="swimlane;fontStyle=1;align=center;startSize=25;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="500" y="580" width="180" height="105" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_vis_id" value="#id" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontStyle=4;" vertex="1" parent="e_visite">
+      <mxGeometry y="25" width="180" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_vis_date" value="date_visite" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_visite">
+      <mxGeometry y="45" width="180" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_vis_lieu" value="lieu_visite" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_visite">
+      <mxGeometry y="65" width="180" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_vis_motif" value="motif" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_visite">
+      <mxGeometry y="85" width="180" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- PRATICIEN -->
+    <mxCell id="e_prat" value="PRATICIEN" style="swimlane;fontStyle=1;align=center;startSize=25;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="940" y="230" width="180" height="145" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_prat_id" value="#id" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontStyle=4;" vertex="1" parent="e_prat">
+      <mxGeometry y="25" width="180" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_prat_nom" value="nom" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_prat">
+      <mxGeometry y="45" width="180" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_prat_prenom" value="prenom" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_prat">
+      <mxGeometry y="65" width="180" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_prat_email" value="email" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_prat">
+      <mxGeometry y="85" width="180" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_prat_tel" value="telephone" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_prat">
+      <mxGeometry y="105" width="180" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_prat_adr" value="adresse" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_prat">
+      <mxGeometry y="125" width="180" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- TYPE_PRATICIEN -->
+    <mxCell id="e_type" value="TYPE_PRATICIEN" style="swimlane;fontStyle=1;align=center;startSize=25;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="940" y="60" width="180" height="65" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_type_id" value="#id" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontStyle=4;" vertex="1" parent="e_type">
+      <mxGeometry y="25" width="180" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_type_lib" value="libelle" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_type">
+      <mxGeometry y="45" width="180" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- PRODUIT -->
+    <mxCell id="e_produit" value="PRODUIT" style="swimlane;fontStyle=1;align=center;startSize=25;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="680" y="590" width="160" height="65" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_prod_id" value="#id" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontStyle=4;" vertex="1" parent="e_produit">
+      <mxGeometry y="25" width="160" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_prod_nom" value="nom" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_produit">
+      <mxGeometry y="45" width="160" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- FAMILLE -->
+    <mxCell id="e_famille" value="FAMILLE" style="swimlane;fontStyle=1;align=center;startSize=25;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="970" y="590" width="160" height="65" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_fam_id" value="#id" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;fontStyle=4;" vertex="1" parent="e_famille">
+      <mxGeometry y="25" width="160" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_fam_lib" value="libelle" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="e_famille">
+      <mxGeometry y="45" width="160" height="20" as="geometry"/>
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════
+         ASSOCIATIONS
+    ═══════════════════════════════════════════ -->
+
+    <!-- AFFECTE_A -->
+    <mxCell id="assoc_affecte" value="AFFECTE_A" style="ellipse;whiteSpace=wrap;html=1;fontStyle=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="155" y="188" width="110" height="50" as="geometry"/>
+    </mxCell>
+
+    <!-- REDIGE -->
+    <mxCell id="assoc_redige" value="REDIGE" style="ellipse;whiteSpace=wrap;html=1;fontStyle=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="340" y="272" width="110" height="50" as="geometry"/>
+    </mxCell>
+
+    <!-- PLANIFIE -->
+    <mxCell id="assoc_planifie" value="PLANIFIE" style="ellipse;whiteSpace=wrap;html=1;fontStyle=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="340" y="600" width="110" height="50" as="geometry"/>
+    </mxCell>
+
+    <!-- CONCERNE (Rapport-Praticien) -->
+    <mxCell id="assoc_concerne_r" value="CONCERNE" style="ellipse;whiteSpace=wrap;html=1;fontStyle=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="750" y="272" width="110" height="50" as="geometry"/>
+    </mxCell>
+
+    <!-- OBJET_DE (Visite-Praticien) -->
+    <mxCell id="assoc_objet_v" value="OBJET_DE" style="ellipse;whiteSpace=wrap;html=1;fontStyle=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="750" y="600" width="110" height="50" as="geometry"/>
+    </mxCell>
+
+    <!-- EST_DE_TYPE -->
+    <mxCell id="assoc_type" value="EST_DE_TYPE" style="ellipse;whiteSpace=wrap;html=1;fontStyle=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="1010" y="155" width="110" height="50" as="geometry"/>
+    </mxCell>
+
+    <!-- PRESENTE -->
+    <mxCell id="assoc_presente" value="PRESENTE" style="ellipse;whiteSpace=wrap;html=1;fontStyle=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="610" y="460" width="110" height="50" as="geometry"/>
+    </mxCell>
+
+    <!-- CLASSE_DANS -->
+    <mxCell id="assoc_classe" value="CLASSE_DANS" style="ellipse;whiteSpace=wrap;html=1;fontStyle=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="870" y="605" width="110" height="50" as="geometry"/>
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════
+         LIENS avec cardinalités
+    ═══════════════════════════════════════════ -->
+
+    <!-- UTILISATEUR --0,N-- AFFECTE_A -->
+    <mxCell id="l1" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" source="e_util" target="assoc_affecte" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="l1c" value="0,N" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="l1">
+      <mxGeometry x="-0.75" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- REGION --1,1-- AFFECTE_A -->
+    <mxCell id="l2" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" source="e_region" target="assoc_affecte" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="l2c" value="1,1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="l2">
+      <mxGeometry x="-0.75" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- UTILISATEUR --1,N-- REDIGE -->
+    <mxCell id="l3" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" source="e_util" target="assoc_redige" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="l3c" value="1,N" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="l3">
+      <mxGeometry x="-0.75" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- RAPPORT --1,1-- REDIGE -->
+    <mxCell id="l4" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" source="e_rapport" target="assoc_redige" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="l4c" value="1,1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="l4">
+      <mxGeometry x="-0.75" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- UTILISATEUR --1,N-- PLANIFIE -->
+    <mxCell id="l5" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" source="e_util" target="assoc_planifie" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="l5c" value="1,N" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="l5">
+      <mxGeometry x="-0.75" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- VISITE --1,1-- PLANIFIE -->
+    <mxCell id="l6" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" source="e_visite" target="assoc_planifie" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="l6c" value="1,1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="l6">
+      <mxGeometry x="-0.75" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- RAPPORT --1,1-- CONCERNE -->
+    <mxCell id="l7" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" source="e_rapport" target="assoc_concerne_r" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="l7c" value="1,1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="l7">
+      <mxGeometry x="-0.75" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- PRATICIEN --0,N-- CONCERNE -->
+    <mxCell id="l8" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" source="e_prat" target="assoc_concerne_r" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="l8c" value="0,N" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="l8">
+      <mxGeometry x="-0.75" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- VISITE --1,1-- OBJET_DE -->
+    <mxCell id="l9" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" source="e_visite" target="assoc_objet_v" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="l9c" value="1,1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="l9">
+      <mxGeometry x="-0.75" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- PRATICIEN --0,N-- OBJET_DE -->
+    <mxCell id="l10" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" source="e_prat" target="assoc_objet_v" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="l10c" value="0,N" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="l10">
+      <mxGeometry x="-0.75" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- PRATICIEN --0,N-- EST_DE_TYPE -->
+    <mxCell id="l11" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" source="e_prat" target="assoc_type" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="l11c" value="0,N" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="l11">
+      <mxGeometry x="-0.75" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- TYPE_PRATICIEN --1,1-- EST_DE_TYPE -->
+    <mxCell id="l12" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" source="e_type" target="assoc_type" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="l12c" value="1,1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="l12">
+      <mxGeometry x="-0.75" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- RAPPORT --0,N-- PRESENTE -->
+    <mxCell id="l13" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" source="e_rapport" target="assoc_presente" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="l13c" value="0,N" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="l13">
+      <mxGeometry x="-0.75" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- PRODUIT --0,N-- PRESENTE -->
+    <mxCell id="l14" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" source="e_produit" target="assoc_presente" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="l14c" value="0,N" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="l14">
+      <mxGeometry x="-0.75" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- PRODUIT --0,N-- CLASSE_DANS -->
+    <mxCell id="l15" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" source="e_produit" target="assoc_classe" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="l15c" value="0,N" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="l15">
+      <mxGeometry x="-0.75" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+    <!-- FAMILLE --1,1-- CLASSE_DANS -->
+    <mxCell id="l16" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" source="e_famille" target="assoc_classe" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="l16c" value="1,1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="l16">
+      <mxGeometry x="-0.75" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+    </mxCell>
+
+  </root>
+</mxGraphModel>

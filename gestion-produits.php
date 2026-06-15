@@ -1,5 +1,10 @@
 <?php
+// ════════════════════════════════════════════════
+//  CONTRÔLEUR — Gestion des produits
+//  Pattern MVC : ce fichier orchestre Model + Vue
+// ════════════════════════════════════════════════
 require 'bd_connexion.php';
+require 'models/ProduitModel.php';
 require 'accueil.php';
 
 if ($role != 'Responsable' && $role != 'Admin') {
@@ -7,43 +12,44 @@ if ($role != 'Responsable' && $role != 'Admin') {
     die("<p style='margin-left: 270px; padding: 2rem;'>Accès non autorisé.</p>");
 }
 
+// ── MODEL ──────────────────────────────────────
+$model       = new ProduitModel($pdo);
 $success_msg = '';
 
+// ── CONTROLLER : traitement des actions POST ───
+if ($_SERVER['REQUEST_METHOD'] === 'POST') csrf_verify();
+
 if (isset($_POST['supprimer_produit'])) {
-    $pdo->prepare("DELETE FROM produits WHERE id = ?")->execute([$_POST['id_produit']]);
+    $model->delete((int)$_POST['id_produit']);
     $success_msg = "Produit supprimé.";
 }
 
 if (isset($_POST['modifier_produit'])) {
     $id_famille = !empty($_POST['id_famille']) ? (int)$_POST['id_famille'] : null;
-    $pdo->prepare("UPDATE produits SET nom=?, id_famille=? WHERE id=?")
-        ->execute([$_POST['nom'], $id_famille, $_POST['id_produit']]);
+    $model->update((int)$_POST['id_produit'], $_POST['nom'], $id_famille);
     $success_msg = "Produit modifié.";
 }
 
 if (isset($_POST['ajout_produit'])) {
     $id_famille = !empty($_POST['id_famille']) ? (int)$_POST['id_famille'] : null;
-    $pdo->prepare("INSERT INTO produits (nom, id_famille) VALUES (?, ?)")
-        ->execute([$_POST['nom'], $id_famille]);
+    $model->create($_POST['nom'], $id_famille);
     $success_msg = "Produit ajouté avec succès !";
 }
 
-$produits = $pdo->query("
-    SELECT p.*, f.libelle as famille_libelle
-    FROM produits p
-    LEFT JOIN familles f ON p.id_famille = f.id
-    ORDER BY f.libelle, p.nom
-")->fetchAll();
-
+// ── MODEL : récupération des données pour la vue
+$produits = $model->findAll();
 $familles = $pdo->query("SELECT * FROM familles ORDER BY libelle")->fetchAll();
+
+// ── VUE : affichage HTML ci-dessous ────────────
 ?>
 
 <h2>Gestion des Produits</h2>
 
 <div class="card">
     <h3>Ajouter un produit</h3>
-    <?php if ($success_msg): ?><p style="color:green; margin-bottom:1rem;"><?= $success_msg ?></p><?php endif; ?>
+    <?php if ($success_msg): ?><p style="color:green; margin-bottom:1rem;"><?= htmlspecialchars($success_msg) ?></p><?php endif; ?>
     <form method="POST">
+        <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
         <div style="display:flex; gap:10px; align-items:flex-end;">
             <div style="flex:2;">
                 <label>Nom du produit *</label>
@@ -75,6 +81,7 @@ $familles = $pdo->query("SELECT * FROM familles ORDER BY libelle")->fetchAll();
             <?php foreach ($produits as $p): ?>
             <tr>
                 <form method="POST">
+                    <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
                     <td><input type="text" name="nom" value="<?= htmlspecialchars($p['nom']) ?>" style="width:100%;"></td>
                     <td>
                         <select name="id_famille">

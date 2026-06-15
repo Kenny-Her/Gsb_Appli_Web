@@ -1,5 +1,10 @@
 <?php
+// ════════════════════════════════════════════════
+//  CONTRÔLEUR — Gestion des praticiens
+//  Pattern MVC : ce fichier orchestre Model + Vue
+// ════════════════════════════════════════════════
 require 'bd_connexion.php';
+require 'models/PraticienModel.php';
 require 'accueil.php';
 
 if ($role != 'Responsable' && $role != 'Admin') {
@@ -7,51 +12,43 @@ if ($role != 'Responsable' && $role != 'Admin') {
     die("<p style='margin-left: 270px; padding: 2rem;'>Accès non autorisé.</p>");
 }
 
+// ── MODEL ──────────────────────────────────────
+$model       = new PraticienModel($pdo);
 $success_msg = '';
 
+// ── CONTROLLER : traitement des actions POST ───
+if ($_SERVER['REQUEST_METHOD'] === 'POST') csrf_verify();
+
 if (isset($_POST['supprimer_praticien'])) {
-    $pdo->prepare("DELETE FROM praticiens WHERE id = ?")->execute([$_POST['id_praticien']]);
+    $model->delete((int)$_POST['id_praticien']);
     $success_msg = "Praticien supprimé.";
 }
 
 if (isset($_POST['modifier_praticien'])) {
-    $id_type = !empty($_POST['id_type']) ? (int)$_POST['id_type'] : null;
-    $pdo->prepare("UPDATE praticiens SET nom=?, prenom=?, id_type=?, adresse=?, email=?, telephone=?, region=? WHERE id=?")
-        ->execute([
-            $_POST['nom'], $_POST['prenom'], $id_type,
-            $_POST['adresse'], $_POST['email'], $_POST['telephone'],
-            $_POST['region'], $_POST['id_praticien']
-        ]);
+    $model->update((int)$_POST['id_praticien'], $_POST);
     $success_msg = "Praticien modifié.";
 }
 
 if (isset($_POST['ajout_praticien'])) {
-    $id_type = !empty($_POST['id_type']) ? (int)$_POST['id_type'] : null;
-    $pdo->prepare("INSERT INTO praticiens (nom, prenom, id_type, adresse, email, telephone, region) VALUES (?, ?, ?, ?, ?, ?, ?)")
-        ->execute([
-            $_POST['nom'], $_POST['prenom'], $id_type,
-            $_POST['adresse'], $_POST['email'], $_POST['telephone'], $_POST['region']
-        ]);
+    $model->create($_POST);
     $success_msg = "Praticien ajouté avec succès !";
 }
 
-$praticiens = $pdo->query("
-    SELECT p.*, t.libelle as type_libelle
-    FROM praticiens p
-    LEFT JOIN type_praticiens t ON p.id_type = t.id
-    ORDER BY p.nom, p.prenom
-")->fetchAll();
-
-$types = $pdo->query("SELECT * FROM type_praticiens ORDER BY libelle")->fetchAll();
+// ── MODEL : récupération des données pour la vue
+$praticiens   = $model->findAll();
+$types        = $pdo->query("SELECT * FROM type_praticiens ORDER BY libelle")->fetchAll();
 $regions_list = $pdo->query("SELECT * FROM regions ORDER BY nom")->fetchAll();
+
+// ── VUE : affichage HTML ci-dessous ────────────
 ?>
 
 <h2>Gestion des Praticiens</h2>
 
 <div class="card">
     <h3>Ajouter un praticien</h3>
-    <?php if ($success_msg): ?><p style="color:green; margin-bottom:1rem;"><?= $success_msg ?></p><?php endif; ?>
+    <?php if ($success_msg): ?><p style="color:green; margin-bottom:1rem;"><?= htmlspecialchars($success_msg) ?></p><?php endif; ?>
     <form method="POST">
+        <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
             <div style="flex:1; min-width:150px;"><label>Nom *</label><input type="text" name="nom" required></div>
             <div style="flex:1; min-width:150px;"><label>Prénom *</label><input type="text" name="prenom" required></div>
@@ -96,6 +93,7 @@ $regions_list = $pdo->query("SELECT * FROM regions ORDER BY nom")->fetchAll();
             <?php foreach ($praticiens as $p): ?>
             <tr>
                 <form method="POST">
+                    <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
                     <td><input type="text" name="nom" value="<?= htmlspecialchars($p['nom']) ?>"></td>
                     <td><input type="text" name="prenom" value="<?= htmlspecialchars($p['prenom']) ?>"></td>
                     <td>

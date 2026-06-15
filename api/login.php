@@ -21,7 +21,6 @@ if (!$user || !password_verify($mdp, $user['mdp'])) {
     json_response(["status" => 401, "message" => "Identifiants incorrects"], 401);
 }
 
-// Générer et sauvegarder le token
 $token = bin2hex(random_bytes(32));
 $pdo->prepare("UPDATE utilisateurs SET token = ? WHERE id = ?")->execute([$token, $user['id']]);
 

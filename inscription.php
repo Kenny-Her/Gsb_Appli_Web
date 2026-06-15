@@ -13,6 +13,7 @@ $success = '';
 $regions = $pdo->query(query: "SELECT * FROM regions ORDER BY nom")->fetchAll();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    csrf_verify();
     $nom         = $_POST['nom']         ?? '';
     $prenom      = $_POST['prenom']      ?? '';
     $email       = $_POST['email']       ?? '';
@@ -48,9 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <h2>Création de compte utilisateur</h2>
 
 <div class="card">
-    <?php if(!empty($error)) echo "<p style='color:red'>$error</p>"; ?>
-    <?php if(!empty($success)) echo "<p style='color:green'>$success</p>"; ?>
+    <?php if(!empty($error)) echo "<p style='color:red'>" . htmlspecialchars($error) . "</p>"; ?>
+    <?php if(!empty($success)) echo "<p style='color:green'>" . htmlspecialchars($success) . "</p>"; ?>
     <form method="POST">
+        <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
         <div style="display:flex; gap:10px;">
             <div style="flex:1">
                 <label>Rôle</label>
