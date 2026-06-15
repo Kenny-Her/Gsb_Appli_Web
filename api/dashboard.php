@@ -6,7 +6,6 @@ $user = getAuthUser($pdo);
 $id   = $user['id'];
 $role = $user['role'];
 
-// Stats visites pour cet utilisateur
 $stmt = $pdo->prepare("
     SELECT
         SUM(CASE WHEN date_visite < CURDATE() THEN 1 ELSE 0 END) as visites_effectuees,
@@ -25,14 +24,12 @@ $data = [
     "objectif"           => 20
 ];
 
-// Stats supplémentaires pour Responsable et Admin
 if ($role === 'Responsable' || $role === 'Admin') {
     $data['nb_praticiens'] = (int)$pdo->query("SELECT COUNT(*) FROM praticiens")->fetchColumn();
     $data['nb_produits']   = (int)$pdo->query("SELECT COUNT(*) FROM produits")->fetchColumn();
     $data['nb_visiteurs']  = (int)$pdo->query("SELECT COUNT(*) FROM utilisateurs WHERE role = 'Visiteur'")->fetchColumn();
 }
 
-// Stats Délégué : rapports en attente de validation
 if ($role === 'Delegue') {
     $stmt = $pdo->prepare("
         SELECT COUNT(*) FROM rapports r
@@ -42,5 +39,15 @@ if ($role === 'Delegue') {
     $stmt->execute([$id]);
     $data['rapports_a_valider'] = (int)$stmt->fetchColumn();
 }
+
+$stmt = $pdo->prepare("
+    SELECT DATE_FORMAT(date_visite, '%Y-%m') AS mois, COUNT(*) AS nb
+    FROM visites
+    WHERE id_utilisateur = ?
+    GROUP BY mois
+    ORDER BY mois ASC
+");
+$stmt->execute([$id]);
+$data['visites_par_mois'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 json_response($data);
